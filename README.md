@@ -1,10 +1,10 @@
 <p align="center">
-  <a href="https://www.kroesch.ch/docs/" target="blank"><img src="logo.png" width="120" alt="Tellcast Logo" /></a>
+  <a href="https://www.kroesch.ch/docs/" target="blank"><img src="logo.png" width="120" alt="Tellcast Logo" /></a><h1>Tellcast</h1>
 </p>
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Tellcast is a Twitter clone built with NestJS. This repository is shared here for learning purposes.
 
 ## Project setup
 
