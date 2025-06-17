@@ -6,6 +6,8 @@
 
 Tellcast is a Twitter clone built with NestJS. This repository is shared here for learning purposes.
 
+![Screenshot](screenshot.png)
+
 ## Project setup
 
 ```bash
