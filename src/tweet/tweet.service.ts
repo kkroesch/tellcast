@@ -7,9 +7,18 @@ import { Request } from 'express';
 export class TweetService {
   buildTweetContext(req: Request, body: { text: string }) {
     const user = req.user?.username || 'anonymous';
+    const rawText = body.text;
+
+    const formattedText = rawText
+      .replace(
+        /@([a-zA-Z0-9_]+)/g,
+        '<a href="/user/$1" class="mention">@$1</a>',
+      )
+      .replace(/#(\w+)/g, '<a href="/tag/$1" class="hashtag">#$1</a>');
+
     return {
       user,
-      text: body.text,
+      text: formattedText,
       timestamp: new Date().toLocaleString(),
     };
   }
