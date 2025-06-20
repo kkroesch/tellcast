@@ -2,9 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { renderFile } from 'ejs';
 import { join } from 'path';
 import { Request } from 'express';
+import { TweetStore } from './tweet.store';
 
 @Injectable()
 export class TweetService {
+  constructor(private readonly store: TweetStore) {}
+
+  async onModuleInit() {
+    await this.store.connect();
+  }
+
   buildTweetContext(req: Request, body: { text: string }) {
     const user = req.user?.username || 'anonymous';
     const rawText = body.text;
@@ -16,11 +23,12 @@ export class TweetService {
       )
       .replace(/#(\w+)/g, '<a href="/tag/$1" class="hashtag">#$1</a>');
 
-    return {
+    const tweet = {
       user,
       text: formattedText,
-      timestamp: new Date().toLocaleString(),
+      timestamp: new Date().toISOString(),
     };
+    return tweet;
   }
 
   renderTweet(context: any): Promise<string> {
@@ -28,5 +36,10 @@ export class TweetService {
       join(__dirname, '../../views/partials/tweet.ejs'),
       context,
     );
+  }
+
+  async getRecentTweets(limit = 20) {
+    const result = await this.store.getRecent(limit);
+    return (result[0] as any).result;
   }
 }

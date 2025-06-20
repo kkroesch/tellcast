@@ -8,11 +8,33 @@ Tellcast is a Twitter clone built with NestJS. This repository is shared here fo
 
 ![Screenshot](screenshot.png)
 
+## Features
+
+- User authentication and authorization via Caddy Security
+- Tweet creation, editing, and deletion
+- User profile management
+- Real-time notifications and updates
+
+
 ## Project setup
 
 ```bash
 $ npm install
 ```
+
+TODO Install SurrealDB or use the free cloud service [SurrealDB Cloud](https://surrealdb.com/cloud) for starting. Place the database configuration in the `.env` file:
+
+```
+# .env
+SURREALDB_URL=wss://<YOUR_INSTANCE_NAME>.surreal.cloud
+SURREALDB_NAMESPACE=public
+SURREALDB_DATABASE=tellcast
+SURREALDB_USERNAME=<YOUR_USERNAME>
+SURREALDB_PASSWORD=<YOUR_PASSWORD>
+```
+
+TODO Install Caddy and create app in Github.
+
 
 ## Compile and run the project
 

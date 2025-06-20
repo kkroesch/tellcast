@@ -29,6 +29,27 @@
     .hashtag:hover {
       text-decoration: underline;
     }
+
+    .tweet-date {
+      color: #666;
+      font-size: 0.8em;
+      display: block;
+      margin-top: 0.3rem;
+    }
+
+    .tweet-footer {
+      display: flex;
+      gap: 1rem;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      color: #666;
+      align-items: center;
+    }
+
+    .tweet-footer a:hover {
+      color: #bbb;
+    }
+
   </style>
 </head>
 <body>
@@ -43,7 +64,13 @@
     <div id="tweets"></div>
   </main>
 
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://unpkg.com/timeago.js@4.0.2/dist/timeago.min.js"></script>
+  <script src="https://unpkg.com/timeago.js@4.0.2/dist/timeago.locales.min.js"></script>
+
+
   <script>
+
     const container = document.getElementById('tweets');
     const form = document.getElementById('tweetForm');
 
@@ -71,6 +98,8 @@
       const el = div.firstChild;
       el.classList.add('fade-in');
       container.prepend(el);
+      feather.replace();
+      timeago.render(document.querySelectorAll('.tweet-date'), 'de');
     }
   </script>
 </body>

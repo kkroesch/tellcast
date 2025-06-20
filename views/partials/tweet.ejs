@@ -1,5 +1,10 @@
 <article>
-  <h3>@<%= user %></h3>
+  <strong>@<%= user %></strong>
   <p><%- text %></p>
-  <small><%= timestamp %></small>
+  <time class="tweet-date" datetime="<%= timestamp %>"></time>
+  <div class="tweet-footer">
+    <a href="#" title="Antworten"><i data-feather="message-circle"></i></a>
+    <a href="#" title="Retweet"><i data-feather="repeat"></i></a>
+    <a href="#" title="Gefällt mir"><i data-feather="heart"></i></a>
+  </div>
 </article>

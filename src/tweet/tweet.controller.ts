@@ -14,8 +14,9 @@ export class TweetController {
 
   @Get()
   @Render('tweets')
-  getPage() {
-    return {};
+  async getPage() {
+    const tweets = await this.tweetService.getRecentTweets();
+    return { tweets };
   }
 
   @Post('tweet')
