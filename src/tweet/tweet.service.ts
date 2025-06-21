@@ -31,6 +31,11 @@ export class TweetService {
     return tweet;
   }
 
+  async getById(id: string) {
+    const result = await this.store.getById(id);
+    return result;
+  }
+
   renderTweet(context: any): Promise<string> {
     return renderFile(
       join(__dirname, '../../views/partials/tweet.ejs'),
@@ -40,6 +45,6 @@ export class TweetService {
 
   async getRecentTweets(limit = 20) {
     const result = await this.store.getRecent(limit);
-    return (result[0] as any).result;
+    return result;
   }
 }

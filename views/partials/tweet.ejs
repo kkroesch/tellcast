@@ -1,5 +1,5 @@
 <article>
-  <strong>@<%= user %></strong>
+  <strong>@<%= user?.handle || '??' %></strong>
   <p><%- text %></p>
   <time class="tweet-date" datetime="<%= timestamp %>"></time>
   <div class="tweet-footer">

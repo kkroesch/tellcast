@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Req, Body, Render, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Req,
+  Body,
+  Render,
+  Res,
+  Param,
+} from '@nestjs/common';
 import { TweetService } from './tweet.service';
 import { TweetGateway } from './tweet.gateway';
 import { renderFile } from 'ejs';
@@ -17,6 +26,12 @@ export class TweetController {
   async getPage() {
     const tweets = await this.tweetService.getRecentTweets();
     return { tweets };
+  }
+
+  @Get('render/tweet/:id')
+  async renderTweet(@Param('id') id: string, @Res() res: Response) {
+    const tweet = await this.tweetService.getById(id);
+    res.render('partials/tweet', { tweet });
   }
 
   @Post('tweet')

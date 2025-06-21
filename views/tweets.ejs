@@ -61,7 +61,11 @@
       <button type="submit">Abschicken</button>
     </form>
     <hr />
-    <div id="tweets"></div>
+    <div id="tweets">
+        <% tweets.forEach(tweet => { %>
+          <%- include('partials/tweet', tweet) %>
+        <% }) %>
+    </div>
   </main>
 
   <script src="https://unpkg.com/feather-icons"></script>
@@ -70,6 +74,10 @@
 
 
   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      feather.replace();
+      timeago.render(document.querySelectorAll("time.tweet-date"));
+    });
 
     const container = document.getElementById('tweets');
     const form = document.getElementById('tweetForm');
