@@ -15,8 +15,8 @@ export class UserStore {
       'SELECT * FROM user WHERE handle = $handle',
       { handle },
     );
-    console.log(unwrap(result));
-    return unwrap(result);
+    const user = unwrap(result);
+    return user ?? null;
   }
 
   async getTweetsByUser(handle: string) {
@@ -24,7 +24,14 @@ export class UserStore {
       'SELECT * FROM tweet WHERE user = type::thing("user", $handle) ORDER BY timestamp DESC',
       { handle },
     );
-    console.log(result[0]);
+    return result[0];
+  }
+
+  async getFollowGraph() {
+    const result = await this.db.query(`
+      SELECT in, out
+      FROM follows
+    `);
     return result[0];
   }
 

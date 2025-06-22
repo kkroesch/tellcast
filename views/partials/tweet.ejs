@@ -5,6 +5,7 @@
   <div class="tweet-footer">
     <a href="#" title="Antworten"><i data-feather="message-circle"></i></a>
     <a href="#" title="Retweet"><i data-feather="repeat"></i></a>
-    <a href="#" title="Gefällt mir"><i data-feather="heart"></i></a>
+    <a href="#" class="like-button" data-id="<%= id %>" title="Gefällt mir">
+      <i data-feather="heart"></i></a> <span class="like-count"><%= likes || 0 %></span>
   </div>
 </article>

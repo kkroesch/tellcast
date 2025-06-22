@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Graph | Tellcast</title>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
+  <script src="https://unpkg.com/cytoscape@3.26.0/dist/cytoscape.min.js"></script>
+  <style>
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin-top: 4rem;
+    }
+    #cy {
+        width: 100%;
+        height: 90vh;
+    }
+  </style>
+</head>
+<body>
+    <main class="container">
+
+        <h1>Follow-Graph</h1>
+        <div id="cy"></div>
+    </main>
+    <script>
+    const rawEdges = <%- JSON.stringify(edges) %>;
+    const nodes = new Set();
+    const elements = [];
+
+    rawEdges.forEach(({ in: target, out: source }) => {
+      source = source.replace(/^user:/, '');
+      target = target.replace(/^user:/, '');
+      nodes.add(source);
+      nodes.add(target);
+      elements.push({ data: { id: source } });
+      elements.push({ data: { id: target } });
+      elements.push({ data: { id: `${source}->${target}`, source, target } });
+    });
+
+    const uniqueElements = Array.from(new Map(
+      elements.map(e => [e.data.id, e])
+    ).values());
+
+    cytoscape({
+      container: document.getElementById('cy'),
+      elements: uniqueElements,
+      style: [
+        { selector: 'node', style: { 'label': 'data(id)', 'background-color': '#007acc', 'color': '#fff' } },
+        { selector: 'edge', style: { 'width': 2, 'line-color': '#ccc', 'target-arrow-shape': 'triangle', 'target-arrow-color': '#ccc' } },
+      ],
+      layout: { name: 'cose' },
+    });
+    </script>
+</body>
+</html>

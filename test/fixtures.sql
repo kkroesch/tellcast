@@ -1,13 +1,5 @@
 // setup/surreal-init.surql
 
--- Beispiel-Inhalt für .env:
--- SURREALDB_URL=https://your-db.surrealdb.cloud
--- SURREALDB_NAMESPACE=tellcast
--- SURREALDB_DATABASE=app
--- SURREALDB_USERNAME=myuser
--- SURREALDB_PASSWORD=supersecret
-
--- Der Zugriff im Code erfolgt via process.env.SURREALDB_*
 
 -- Beispiel-User
 CREATE user:trumpf CONTENT {
@@ -31,7 +23,7 @@ CREATE user:epsilon CONTENT {
 CREATE user:karsten CONTENT {
   handle: "karsten",
   bio: "DevOps-Philosoph mit Liebe zur Kommandozeile.",
-  website: "https://kroesch.net"
+  website: "https://www.kroesch.ch"
 };
 
 CREATE user:lisbeth CONTENT {

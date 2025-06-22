@@ -1,22 +1,40 @@
-import { Controller, Get, Param, Render, Post, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Render,
+  Post,
+  Req,
+  Res,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get(':handle')
-  @Render('profile')
-  async getProfile(@Param('handle') handle: string) {
+  @Get('user/:handle')
+  async getProfile(@Param('handle') handle: string, @Res() res) {
     const profile = await this.userService.getByHandle(handle);
+    if (!profile) {
+      return res.status(404).render('404');
+    }
     const tweets = await this.userService.getTweetsByUser(handle);
-    return { profile, tweets };
+    return res.render('profile', { profile, tweets });
   }
 
-  @Post(':handle/follow')
+  @Post('user/:handle/follow')
   async followUser(@Param('handle') handle: string, @Req() req) {
     const follower = 'user:karsten'; // Hardcoded for now
     await this.userService.followUser(follower, handle);
     return { success: true };
+  }
+
+  @Get('/graph')
+  @Render('graph')
+  async getGraph() {
+    const edges = await this.userService.getFollowGraph();
+    return { edges };
   }
 }

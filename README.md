@@ -8,6 +8,10 @@ Tellcast is a Twitter clone built with NestJS. This repository is shared here fo
 
 ![Screenshot](screenshot.png)
 
+One of Tellcasts unique features is the view of the user's connection graph:
+
+![Screenshot](screenshot-graph.png)
+
 ## Features
 
 - User authentication and authorization via Caddy Security

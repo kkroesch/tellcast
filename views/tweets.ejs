@@ -86,6 +86,19 @@
     document.addEventListener("DOMContentLoaded", () => {
       feather.replace();
       timeago.render(document.querySelectorAll("time.tweet-date"));
+
+      document.querySelectorAll('.like-button').forEach(button => {
+        button.addEventListener('click', async (e) => {
+          e.preventDefault();
+          const id = button.dataset.id;
+          console.log(`liking tweet with id ${id}`);
+          const res = await fetch(`/tweet/${id}/like`, { method: 'POST' });
+          if (res.ok) {
+            const countEl = button.querySelector('.like-count');
+            countEl.textContent = parseInt(countEl.textContent) + 1;
+          }
+        });
+      });
     });
 
     const container = document.getElementById('tweets');

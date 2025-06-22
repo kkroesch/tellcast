@@ -8,8 +8,8 @@ import { TweetStore } from './tweet.store';
 export class TweetService {
   constructor(private readonly store: TweetStore) {}
 
-  buildTweetContext(req: Request, body: { text: string }) {
-    const user = req.user?.username || 'anonymous';
+  async buildTweetContext(req: Request, body: { text: string }) {
+    const user = req.user?.username || 'karsten';
     const rawText = body.text;
 
     const formattedText = rawText
@@ -24,6 +24,7 @@ export class TweetService {
       text: formattedText,
       timestamp: new Date().toISOString(),
     };
+    await this.store.save(tweet);
     return tweet;
   }
 
@@ -37,6 +38,10 @@ export class TweetService {
       join(__dirname, '../../views/partials/tweet.ejs'),
       context,
     );
+  }
+
+  async likeTweet(userId: string, tweetId: string) {
+    return this.store.likeTweet(userId, tweetId);
   }
 
   async getRecentTweets(limit = 20) {

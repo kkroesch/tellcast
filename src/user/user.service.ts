@@ -18,4 +18,8 @@ export class UserService {
   async followUser(followerId: string, handle: string) {
     return this.store.createFollow(followerId, handle);
   }
+
+  async getFollowGraph() {
+    return this.store.getFollowGraph();
+  }
 }

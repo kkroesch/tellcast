@@ -43,6 +43,13 @@ export class TweetController {
     return html;
   }
 
+  @Post('tweet/:id/like')
+  async likeTweet(@Param('id') id: string, @Req() req) {
+    const liker = `user:${req.headers['x-auth-user'] || 'karsten'}`;
+    await this.tweetService.likeTweet(liker, id);
+    return { success: true };
+  }
+
   @Get('tweet/events')
   sse(@Res() res: Response) {
     res.setHeader('Content-Type', 'text/event-stream');
