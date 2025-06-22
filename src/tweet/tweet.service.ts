@@ -8,10 +8,6 @@ import { TweetStore } from './tweet.store';
 export class TweetService {
   constructor(private readonly store: TweetStore) {}
 
-  async onModuleInit() {
-    await this.store.connect();
-  }
-
   buildTweetContext(req: Request, body: { text: string }) {
     const user = req.user?.username || 'anonymous';
     const rawText = body.text;

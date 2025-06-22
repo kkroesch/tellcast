@@ -1,28 +1,11 @@
 import Surreal from 'surrealdb';
-import * as dotenv from 'dotenv';
+import { createSurrealConnection } from '../db.config';
 
 export class TweetStore {
   private db: Surreal;
 
-  constructor() {
-    this.db = new Surreal();
-    dotenv.config();
-  }
-
-  async connect() {
-    await this.db.connect(
-      'ws://localhost:8000/rpc',
-      //'wss://tellcast-06boonlsk5t0rdhoihiaja32ds.aws-euw1.surreal.cloud',
-    );
-
-    await this.db.signin({
-      username: 'root', //process.env.SURREALDB_USER!,
-      password: 'root', //process.env.SURREALDB_PASSWORD!,
-    });
-    await this.db.use({
-      namespace: 'public',
-      database: 'tellcast',
-    });
+  async onModuleInit() {
+    this.db = await createSurrealConnection();
   }
 
   async save(tweet: { user: string; text: string; timestamp: string }) {
@@ -44,5 +27,17 @@ export class TweetStore {
       { limit },
     );
     return result[0];
+  }
+
+  async createLike(userId: string, handle: string) {
+    const result = await this.db.query(
+      'SELECT id FROM user WHERE handle = $handle',
+      { handle },
+    );
+    const likedId = result[0];
+    return this.db.query('RELATE $userId->likes->$likedId', {
+      userId,
+      likedId,
+    });
   }
 }
